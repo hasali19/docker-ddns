@@ -40,6 +40,7 @@ struct SshDnsmasqConfig {
     user: String,
     key_file: String,
     config_dir: String,
+    restart_cmd: String,
 }
 
 #[tokio::main(flavor = "current_thread")]
@@ -234,12 +235,14 @@ async fn create_dnsmasq_record(
     target: &str,
 ) -> eyre::Result<()> {
     let config_dir = &config.config_dir;
+    let restart_cmd = &config.restart_cmd;
 
     #[rustfmt::skip]
     let remote_cmd = format!(r#"
         ([ -e {config_dir}/{hostname} ] && echo 'Already exists') || (
             echo 'cname={hostname},{target}' > {config_dir}/{hostname} &&
-            echo "Created config entry"
+            echo "Created config entry" &&
+            {restart_cmd}
         )
     "#);
 
