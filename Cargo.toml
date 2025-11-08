@@ -5,7 +5,9 @@ edition = "2024"
 
 [dependencies]
 bollard = "0.19.4"
-cloudflare = "0.14.0"
+cloudflare = { version = "0.14.0", default-features = false, features = [
+    "rustls-tls",
+] }
 color-eyre = "0.6.5"
 eyre = "0.6.12"
 futures = "0.3.31"
