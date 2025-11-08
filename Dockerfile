@@ -2,7 +2,7 @@ FROM alpine:latest
 
 ARG TARGETPLATFORM
 
-RUN apk add --no-cache ssh
+RUN apk add --no-cache openssh
 
 WORKDIR /app
 
